@@ -37,7 +37,7 @@ jobs:
         pwd
         ls -lah
         cd out/
-        fileName=$(ls master-pdf-editor*.AppImage)
+        fileName=$(ls Master_PDF_Editor*.AppImage)
         echo "fileName: $fileName"
         fileNameNew=$(echo "$fileName" | sed 's/.AppImage//')
         mv "$fileName" "${fileNameNew}-1_JB.AppImage"

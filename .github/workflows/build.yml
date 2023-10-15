@@ -13,7 +13,7 @@ jobs:
     #https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
     #runs-on: ubuntu-latest # Not working with  ubuntu-latest /  ubuntu-22.04
     # Error: /lib/x86_64-linux-gnu/libgio-2.0.so.0: undefined symbol: g_module_open_full
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@master
     - name: install fuse and libfuse2
@@ -51,12 +51,12 @@ jobs:
     # https://github.com/marketplace/actions/upload-to-github-release
     - uses: xresloader/upload-to-github-release@main
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          file: "out/master-pdf-editor-*.AppImage; out/master-pdf-editor-*.md5"
-          #delete_file: "random-name-*.txt;random-*.txt"
-          release_id: ${{ steps.create_release.outputs.id }}
-          #overwrite: true
-          verbose: true
-          #tags: true
-          draft: false
+        file: "out/master-pdf-editor-*.AppImage; out/master-pdf-editor-*.md5"
+        #delete_file: "random-name-*.txt;random-*.txt"
+        release_id: ${{ steps.create_release.outputs.id }}
+        #overwrite: true
+        verbose: true
+        #tags: true
+        draft: false

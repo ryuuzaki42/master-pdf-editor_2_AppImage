@@ -6,7 +6,6 @@ ingredients:
     - deb http://archive.ubuntu.com/ubuntu/ focal main universe
 
 script:
-  - sudo apt-get install libselinux1
   - wget -c https://code-industry.net/public/master-pdf-editor-5.9.70-qt5.9.x86_64.deb
   - sudo apt install ./master-pdf-editor*.deb
   - pwd

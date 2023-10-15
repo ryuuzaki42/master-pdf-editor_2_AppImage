@@ -7,7 +7,7 @@ ingredients:
 
 script:
   - wget -c https://code-industry.net/public/master-pdf-editor-5.9.70-qt5.9.x86_64.deb
-  - apt install ./master-pdf-editor*.deb
+  - sudo apt install ./master-pdf-editor*.deb
   - pwd
   - ls -lah
   - ls -lah ../

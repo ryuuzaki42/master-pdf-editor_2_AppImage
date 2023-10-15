@@ -1,0 +1,62 @@
+name: build
+
+on:
+  push:
+    branches:
+      - "**"
+    tags:
+      - "!**"
+
+jobs:
+  build:
+    name: Build
+    #https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+    #runs-on: ubuntu-latest # Not working with  ubuntu-latest /  ubuntu-22.04
+    # Error: /lib/x86_64-linux-gnu/libgio-2.0.so.0: undefined symbol: g_module_open_full
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: install fuse and libfuse2
+      run: sudo apt install fuse libfuse2
+
+    - name: Get pkg2appimage
+      run: |
+        set -x
+        wget https://github.com/AppImageCommunity/pkg2appimage/releases/download/continuous/pkg2appimage--x86_64.AppImage
+        chmod +x pkg2appimage--x86_64.AppImage
+        ls -lah
+
+    - name: Make AppImage
+      run:  |
+        set -x
+        ./pkg2appimage--x86_64.AppImage master-pdf-editor.yml
+
+    - name: List files and rename AppImage
+      run: |
+        set -x
+        pwd
+        ls -lah
+        cd out/
+        fileName=$(ls master-pdf-editor*.AppImage)
+        echo "fileName: $fileName"
+        fileNameNew=$(echo "$fileName" | sed 's/.AppImage//')
+        mv "$fileName" "${fileNameNew}-1_JB.AppImage"
+        md5sum "${fileNameNew}-1_JB.AppImage" > "${fileNameNew}-1_JB.AppImage.md5"
+        ls -lah
+
+    # Build - Errror: Resource not accessible by integration
+    # Change Settings -> Actions -> General -> Workflow Permissions to allow read and write:
+    # https://github.com/actions/first-interaction/issues/10#issuecomment-1506118886
+
+    # https://github.com/marketplace/actions/upload-to-github-release
+    - uses: xresloader/upload-to-github-release@main
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          file: "out/master-pdf-editor-*.AppImage; out/master-pdf-editor-*.md5"
+          #delete_file: "random-name-*.txt;random-*.txt"
+          release_id: ${{ steps.create_release.outputs.id }}
+          #overwrite: true
+          verbose: true
+          #tags: true
+          draft: false

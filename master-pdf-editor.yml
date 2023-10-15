@@ -1,0 +1,15 @@
+app: master-pdf-editor
+
+ingredients:
+  dist: focal
+  sources:
+    - deb http://archive.ubuntu.com/ubuntu/ focal main universe
+
+script:
+  - wget -c https://code-industry.net/public/master-pdf-editor-5.9.70-qt5.9.x86_64.deb
+  - apt install ./master-pdf-editor*.deb
+  - pwd
+  - ls -lah
+  - ls -lah ../
+  - ls -lah ../../
+  - cp ../../README.md .

@@ -53,7 +53,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: "out/master-pdf-editor-*.AppImage; out/master-pdf-editor-*.md5"
+        file: "out/Master_PDF_Editor*.AppImage; out/Master_PDF_Editor-*.md5"
         #delete_file: "random-name-*.txt;random-*.txt"
         release_id: ${{ steps.create_release.outputs.id }}
         #overwrite: true
